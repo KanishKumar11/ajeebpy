@@ -1,27 +1,36 @@
 # This v1.0 of Mr. Ajeeb Created by Keen Kanish
-import pyttsx3
-import datetime
-import speech_recognition as sr
-import wikipedia
-import webbrowser
-import pywhatkit
-import pyaudio
+# All imports here
+import pyttsx3 #Text-to-speech
+import datetime #To get date and time
+import speech_recognition as sr #To recognise speech of user
+import wikipedia #To get content from wikipedia
+import webbrowser #To open links in browser
+import pywhatkit #To play songs on youtube
+import pyaudio #With this our AI robot will speak
 import pyjokes
+import random
+import calendar
+import warnings
+from gtts import gTTS
+from kivy.app import App
+from kivy.uix.button import Button
+
+#Ignore any warning message
+warnings.filterwarnings('ignore')
 
 engine = pyttsx3.init()
-engine.setProperty("rate", 150)
+engine.setProperty("rate", 120)
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[2].id)
 
 
-from kivy.app import App
-from kivy.uix.button import Button
 
-class TestApp(App):
+
+class Ajeeb(App):
     def build(self):
         return Button(text='This is Mr. Ajeeb Please Close this window to continue')
 
-TestApp().run()
+Ajeeb().run()
 
 
 def speak(audio):
@@ -39,7 +48,7 @@ def wishMe():
     else:
         speak("Good Evening!")
         
-    speak("I am Mr. Ajeeb sir. I was created by Keen Kanish. How may I Help You?")
+    speak("I am Mr. Ajeeeb.I was created by Keen Kanish. How can i help you?")
     
 def takeCommand():
     r = sr.Recognizer()
@@ -57,6 +66,19 @@ def takeCommand():
         print("Say that again please...")
         return  "None"
     return query
+
+def date():
+    year = int(datetime.datetime.now().year)
+    month = str(datetime.datetime.now().month)
+    date = int(datetime.datetime.now().day)
+    speak(date)
+    speak(month)
+    speak(year)
+    print(date)
+    print(month)
+    print(year)
+    
+    
 if __name__ == "__main__":
     speak("Kanish is Keen!")
     
@@ -71,7 +93,9 @@ if __name__ == "__main__":
             print(results)
             speak("According to wikipedia" + results)
             
-        
+        elif 'date' in query:
+            date()
+    
         elif 'play' in query:
             speak('Playing...')
             query = query.replace(" youtube", "")
