@@ -1,0 +1,62 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ajeeb"
+version = "2.0.0"
+description = "Mr. Ajeeb - a voice assistant with a terminal CLI and a Streamlit web UI."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Keen Kanish" }]
+keywords = ["voice-assistant", "speech-recognition", "streamlit", "tts"]
+
+dependencies = [
+    "requests>=2.31",
+    # Windows ships no timezone database, so zoneinfo (the world clock) needs this.
+    "tzdata>=2024.1; sys_platform == 'win32'",
+]
+
+[project.optional-dependencies]
+# Terminal front-end: offline TTS + live microphone.
+cli = [
+    "pyttsx3>=2.90",
+    "SpeechRecognition>=3.10",
+    "PyAudio>=0.2.14",
+    "rich>=13.0",
+]
+# Web front-end: browser mic (no PyAudio needed) + Google TTS playback.
+web = [
+    "streamlit>=1.40",
+    "SpeechRecognition>=3.10",
+    "gTTS>=2.5",
+]
+jokes = ["pyjokes>=0.6"]
+dev = ["pytest>=8.0", "ruff>=0.6", "mypy>=1.11"]
+
+[project.scripts]
+ajeeb = "ajeeb.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/keenkanish/ajeebpy"
+
+[tool.hatch.build.targets.wheel]
+packages = ["ajeeb"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_unused_ignores = true
+warn_redundant_casts = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
