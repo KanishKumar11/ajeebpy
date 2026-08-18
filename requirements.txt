@@ -1,0 +1,15 @@
+# Core (needed by everything)
+requests>=2.31
+tzdata>=2024.1; sys_platform == "win32"   # zoneinfo has no tz database on Windows
+
+# Web UI: streamlit run app.py  -- uses the browser microphone, no PyAudio
+streamlit>=1.40
+SpeechRecognition>=3.10
+gTTS>=2.5
+
+# Terminal UI: ajeeb --voice  -- offline system voice + local microphone
+pyttsx3>=2.90
+PyAudio>=0.2.14
+
+# Optional flavour
+pyjokes>=0.6
